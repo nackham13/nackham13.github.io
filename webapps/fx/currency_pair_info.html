@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<title>通貨ペア情報 | FX</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script>
+			$(document).on("mobileinit", function() {
+				$.mobile.loader.prototype.options.text = "Loading...";
+				$.mobile.loader.prototype.options.textonly = false;
+				$.mobile.loader.prototype.options.textVisible = true;
+				$.mobile.loader.prototype.options.theme = "b";
+			});
+		</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script>
+			$(function() {
+				$f.getJSONP("https://script.google.com/macros/s/AKfycbxEMnPfVkdyrxiHtaU6E6vlkn4KQBPiVsmg_l3zu5QP9UF25r4/exec", {
+					"function": "getCurrencyPairInfo"
+				}, function(data) {
+					readCurrencyPairInfo(data["data"]);
+				});
+
+				$("#saveUsdJpyButton").click(function() {
+					$f.getJSONP("https://script.google.com/macros/s/AKfycbxEMnPfVkdyrxiHtaU6E6vlkn4KQBPiVsmg_l3zu5QP9UF25r4/exec", {
+						"function": "saveCurrencyPairInfo",
+						"currencyPair": "USDJPY",
+						"spread": $("#spreadUsdJpy").val(),
+						"atr": $("#atrUsdJpy").val(),
+						"irrPerAtr": $("#irrPerAtrUsdJpy").val(),
+						"cpOnPbd": $("#cpOnPbdUsdJpy").val()
+					}, function(data) {
+						readCurrencyPairInfo(data["data"]);
+					});
+				});
+
+				$("#irrPerAtrUsdJpy").change(function() {
+					var initialRisk = $("#atrUsdJpy").val() * $("#irrPerAtrUsdJpy").val();
+					initialRisk = initialRisk * 1000;
+					initialRisk = Math.floor(initialRisk);
+					initialRisk = initialRisk / 1000;
+					$("#initialRiskUsdJpy").val(initialRisk);
+				});
+			});
+
+			function readCurrencyPairInfo(data) {
+				for (i in data) {
+					if (data[i]["CURRENCY_PAIR"] == "USDJPY") {
+						$("#spreadUsdJpy").val($f.toFixed(data[i]["SPREAD"], 3));
+						$("#atrUsdJpy").val($f.toFixed(data[i]["ATR"], 3));
+						$("#irrPerAtrUsdJpy").val($f.toFixed(data[i]["IRR_PER_ATR"], 1)).selectmenu("refresh");
+						$("#cpOnPbdUsdJpy").val($f.toFixed(data[i]["CP_ON_PBD"], 3));
+
+						$("#initialRiskUsdJpy").val($f.toFixed($f.floor($f.toFloat("#atrUsdJpy") * $f.toFloat("#irrPerAtrUsdJpy"), 1000), 3));
+						$("#volatilityBreakoutBidUsdJpy").val($f.toFixed($f.toFloat("#cpOnPbdUsdJpy") - $f.floor($f.toFloat("#atrUsdJpy") * 0.8, 1000), 3));
+						$("#volatilityBreakoutAskUsdJpy").val($f.toFixed($f.toFloat("#cpOnPbdUsdJpy") + $f.toFloat("#spreadUsdJpy") + $f.floor($f.toFloat("#atrUsdJpy") * 0.8, 1000), 3));
+					} else if (data[i]["CURRENCY_PAIR"] == "USDCHF") {
+						
+					} else if (data[i]["CURRENCY_PAIR"] == "EURUSD") {
+						
+					} else if (data[i]["CURRENCY_PAIR"] == "GBPUSD") {
+						
+					} else if (data[i]["CURRENCY_PAIR"] == "AUDUSD") {
+						
+					} else if (data[i]["CURRENCY_PAIR"] == "NZDUSD") {
+						
+					} else {
+						// do-nothing.
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="page-balance" data-role="page" data-theme="b">
+			<div data-role="header" data-position="fixed">
+				<h1>通貨ペア情報</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<div class="ui-field-contain">
+					<div id="tabs" data-role="tabs">
+						<div data-role="navbar">
+							<ul>
+								<li><a href="#USDJPY">USD/JPY</a></li>
+								<li><a href="#USDCHF">USD/CHF</a></li>
+								<li><a href="#EURUSD">EUR/USD</a></li>
+								<li><a href="#GBPUSD">GBP/USD</a></li>
+								<li><a href="#AUDUSD">AUD/USD</a></li>
+								<li><a href="#NZDUSD">NZD/USD</a></li>
+							</ul>
+						</div>
+						<div id="USDJPY" class="ui-body">
+							<div class="ui-field-contain">
+								USD/JPY
+							</div>
+							<div class="ui-field-contain">
+								<label for="spreadUsdJpy">スプレッド</label>
+								<input type="number" id="spreadUsdJpy" name="spreadUsdJpy" value="0" data-clear-btn="true" style="text-align: right;">
+							</div>
+							<div class="ui-field-contain">
+								<label for="">ATR</label>
+								<input type="number" id="atrUsdJpy" name="atrUsdJpy" value="0" data-clear-btn="true" style="text-align: right;">
+							</div>
+							<div class="ui-field-contain">
+								<div class="ui-grid-solo">
+									<div class="ui-block-a">
+										<label for="initialRiskUsdJpy">初期リスク(1R)</label>
+										<input type="text" id="initialRiskUsdJpy" name="initialRiskUsdJpy"  value="0" readonly="readonly" style="text-align: right;">
+									</div>
+									<div class="ui-block-a">
+										<label for="irrPerAtrUsdJpy">初期リスク係数</label>
+										<select id="irrPerAtrUsdJpy" name="irrPerAtrUsdJpy">
+											<option value="2.7">2.7</option>
+											<option value="2.8">2.8</option>
+											<option value="2.9">2.9</option>
+											<option value="3.0">3.0</option>
+											<option value="3.1">3.1</option>
+											<option value="3.2">3.2</option>
+											<option value="3.3">3.3</option>
+											<option value="3.4">3.4</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="ui-field-contain">
+								<div class="ui-grid-solo">
+									<div class="ui-block-a">
+										<label>ボラティリティブレイクアウト</label>
+									</div>
+								</div>
+								<div class="ui-grid-a">
+									<div class="ui-block-a">
+										<label for="">BID</label>
+										<input type="text" id="volatilityBreakoutBidUsdJpy" name="volatilityBreakoutBidUsdJpy" value="0" readonly="readonly" style="text-align: right;">
+									</div>
+									<div class="ui-block-b">
+										<label for="">ASK</label>
+										<input type="text" id="volatilityBreakoutAskUsdJpy" name="volatilityBreakoutAskUsdJpy" value="0" readonly="readonly" style="text-align: right;">
+									</div>
+								</div>
+								<div class="ui-grid-solo">
+									<div class="ui-block-a">
+										<label for="cpOnPbdUsdJpy">前営業日の終値</label>
+										<input type="number" id="cpOnPbdUsdJpy" name="cpOnPbdUsdJpy" value="0" data-clear-btn="true" style="text-align: right;">
+									</div>
+								</div>
+							</div>
+							<div class="ui-field-contain">
+								<button id="saveUsdJpyButton" name="saveUsdJpyButton">保存する</button>
+							</div>
+						</div>
+						<div id="USDCHF" class="ui-body">
+							<p>USDCHF</p>
+						</div>
+						<div id="EURUSD" class="ui-body">
+							<p>EURUSD</p>
+						</div>
+						<div id="GBPUSD" class="ui-body">
+							<p>GBPUSD</p>
+						</div>
+						<div id="AUDUSD" class="ui-body">
+							<p>AUDUSD</p>
+						</div>
+						<div id="NZDUSD" class="ui-body">
+							<p>NZDUSD</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div data-role="footer">
+				<h1>&copy; Yuhei Nakamura</h1>
+			</div>
+		</div>
+	</body>
+</html>

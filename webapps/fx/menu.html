@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Menu | FX</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+		<script>
+			$(function() {
+				$("#tradeButton").click(function() {
+					location.href = "https://fcnana.github.io/webapps/fx/trade.html";
+				});
+
+				$("#currencyPairInfoButton").click(function() {
+					location.href = "https://fcnana.github.io/webapps/fx/currency_pair_info.html";
+				});
+
+				$("#settingButton").click(function() {
+					location.href = "https://fcnana.github.io/webapps/fx/setting.html";
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="page-balance" data-role="page" data-theme="b">
+			<div data-role="header" data-position="fixed">
+				<h1>Menu</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<div class="ui-field-contain">
+					<div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<button id="tradeButton" class="ui-btn ui-corner-all"><i class="material-icons">swap_horiz</i><br>トレード</button>
+						</div>
+						<div class="ui-block-a">
+							<button id="currencyPairInfoButton" class="ui-btn ui-corner-all"><i class="material-icons">info_outline</i><br>通貨ペア情報</button>
+						</div>
+						<div class="ui-block-a">
+							<button id="settingButton" class="ui-btn ui-corner-all"><i class="material-icons">settings</i><br>設定</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div data-role="footer">
+				<h1>&copy; Yuhei Nakamura</h1>
+			</div>
+		</div>
+	</body>
+</html>
