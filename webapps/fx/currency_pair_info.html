@@ -25,49 +25,160 @@
 					readCurrencyPairInfo(data["data"]);
 				});
 
-				$("#saveUsdJpyButton").click(function() {
+				$("#saveButton1").click(function() {
 					$f.getJSONP("https://script.google.com/macros/s/AKfycbxEMnPfVkdyrxiHtaU6E6vlkn4KQBPiVsmg_l3zu5QP9UF25r4/exec", {
 						"function": "saveCurrencyPairInfo",
-						"currencyPair": "USDJPY",
-						"spread": $("#spreadUsdJpy").val(),
-						"atr": $("#atrUsdJpy").val(),
-						"irrPerAtr": $("#irrPerAtrUsdJpy").val(),
-						"cpOnPbd": $("#cpOnPbdUsdJpy").val()
+						"currencyPair": $("#currencyPair1").val(),
+						"spread": $("#spread1").val(),
+						"atr": $("#atr1").val(),
+						"irrPerAtr": $("#initialRiskRate1").val(),
+						"cpOnPbd": $("#close1").val()
 					}, function(data) {
 						readCurrencyPairInfo(data["data"]);
 					});
 				});
 
-				$("#irrPerAtrUsdJpy").change(function() {
-					var initialRisk = $("#atrUsdJpy").val() * $("#irrPerAtrUsdJpy").val();
-					initialRisk = initialRisk * 1000;
-					initialRisk = Math.floor(initialRisk);
-					initialRisk = initialRisk / 1000;
-					$("#initialRiskUsdJpy").val(initialRisk);
+				$("#saveButton2").click(function() {
+					$f.getJSONP("https://script.google.com/macros/s/AKfycbxEMnPfVkdyrxiHtaU6E6vlkn4KQBPiVsmg_l3zu5QP9UF25r4/exec", {
+						"function": "saveCurrencyPairInfo",
+						"currencyPair": $("#currencyPair2").val(),
+						"spread": $("#spread2").val(),
+						"atr": $("#atr2").val(),
+						"irrPerAtr": $("#initialRiskRate2").val(),
+						"cpOnPbd": $("#close2").val()
+					}, function(data) {
+						readCurrencyPairInfo(data["data"]);
+					});
 				});
+
+				$("#saveButton3").click(function() {
+					$f.getJSONP("https://script.google.com/macros/s/AKfycbxEMnPfVkdyrxiHtaU6E6vlkn4KQBPiVsmg_l3zu5QP9UF25r4/exec", {
+						"function": "saveCurrencyPairInfo",
+						"currencyPair": $("#currencyPair3").val(),
+						"spread": $("#spread3").val(),
+						"atr": $("#atr3").val(),
+						"irrPerAtr": $("#initialRiskRate3").val(),
+						"cpOnPbd": $("#close3").val()
+					}, function(data) {
+						readCurrencyPairInfo(data["data"]);
+					});
+				});
+
+				$("#saveButton4").click(function() {
+					$f.getJSONP("https://script.google.com/macros/s/AKfycbxEMnPfVkdyrxiHtaU6E6vlkn4KQBPiVsmg_l3zu5QP9UF25r4/exec", {
+						"function": "saveCurrencyPairInfo",
+						"currencyPair": $("#currencyPair4").val(),
+						"spread": $("#spread4").val(),
+						"atr": $("#atr4").val(),
+						"irrPerAtr": $("#initialRiskRate4").val(),
+						"cpOnPbd": $("#close4").val()
+					}, function(data) {
+						readCurrencyPairInfo(data["data"]);
+					});
+				});
+
+				$("#saveButton5").click(function() {
+					$f.getJSONP("https://script.google.com/macros/s/AKfycbxEMnPfVkdyrxiHtaU6E6vlkn4KQBPiVsmg_l3zu5QP9UF25r4/exec", {
+						"function": "saveCurrencyPairInfo",
+						"currencyPair": $("#currencyPair5").val(),
+						"spread": $("#spread5").val(),
+						"atr": $("#atr5").val(),
+						"irrPerAtr": $("#initialRiskRate5").val(),
+						"cpOnPbd": $("#close5").val()
+					}, function(data) {
+						readCurrencyPairInfo(data["data"]);
+					});
+				});
+
+				$("#saveButton6").click(function() {
+					$f.getJSONP("https://script.google.com/macros/s/AKfycbxEMnPfVkdyrxiHtaU6E6vlkn4KQBPiVsmg_l3zu5QP9UF25r4/exec", {
+						"function": "saveCurrencyPairInfo",
+						"currencyPair": $("#currencyPair6").val(),
+						"spread": $("#spread6").val(),
+						"atr": $("#atr6").val(),
+						"irrPerAtr": $("#initialRiskRate6").val(),
+						"cpOnPbd": $("#close6").val()
+					}, function(data) {
+						readCurrencyPairInfo(data["data"]);
+					});
+				});
+
 			});
 
 			function readCurrencyPairInfo(data) {
 				for (i in data) {
 					if (data[i]["CURRENCY_PAIR"] == "USDJPY") {
-						$("#spreadUsdJpy").val($f.toFixed(data[i]["SPREAD"], 3));
-						$("#atrUsdJpy").val($f.toFixed(data[i]["ATR"], 3));
-						$("#irrPerAtrUsdJpy").val($f.toFixed(data[i]["IRR_PER_ATR"], 1)).selectmenu("refresh");
-						$("#cpOnPbdUsdJpy").val($f.toFixed(data[i]["CP_ON_PBD"], 3));
+						$("#currencyPair1").val(data[i]["CURRENCY_PAIR"]);
+						$("#spread1").val($f.toFixed(data[i]["SPREAD"], 3));
+						$("#initialRiskRate1").val($f.toFixed(data[i]["IRR_PER_ATR"], 1));
+						$("#atr1").val($f.toFixed(data[i]["ATR"], 3));
+						$("#close1").val($f.toFixed(data[i]["CP_ON_PBD"], 3));
 
-						$("#initialRiskUsdJpy").val($f.toFixed($f.floor($f.toFloat("#atrUsdJpy") * $f.toFloat("#irrPerAtrUsdJpy"), 1000), 3));
-						$("#volatilityBreakoutBidUsdJpy").val($f.toFixed($f.toFloat("#cpOnPbdUsdJpy") - $f.floor($f.toFloat("#atrUsdJpy") * 0.8, 1000), 3));
-						$("#volatilityBreakoutAskUsdJpy").val($f.toFixed($f.toFloat("#cpOnPbdUsdJpy") + $f.toFloat("#spreadUsdJpy") + $f.floor($f.toFloat("#atrUsdJpy") * 0.8, 1000), 3));
+						$("#positionSize1").val($f.toFixed(11000 / ($f.toFloat("#atr1") * $f.toFloat("#initialRiskRate1") * 100 * 10), 1));
+						$("#initialRisk1").val($f.toFixed($f.floor($f.toFloat("#atr1") * $f.toFloat("#initialRiskRate1"), 1000), 3));
+						$("#volatilityBreakoutBid1").val($f.toFixed($f.toFloat("#close1") - $f.floor($f.toFloat("#atr1") * 0.8, 1000), 3));
+						$("#volatilityBreakoutAsk1").val($f.toFixed($f.toFloat("#close1") + $f.toFloat("#spread1") + $f.floor($f.toFloat("#atr1") * 0.8, 1000), 3));
+						$("#trail1").val($f.toFixed($f.toFloat("#atr1") * $f.toFloat("#initialRiskRate1"), 3));
 					} else if (data[i]["CURRENCY_PAIR"] == "USDCHF") {
-						
+						$("#currencyPair2").val(data[i]["CURRENCY_PAIR"]);
+						$("#spread2").val($f.toFixed(data[i]["SPREAD"], 5));
+						$("#initialRiskRate2").val($f.toFixed(data[i]["IRR_PER_ATR"], 1));
+						$("#atr2").val($f.toFixed(data[i]["ATR"], 5));
+						$("#close2").val($f.toFixed(data[i]["CP_ON_PBD"], 5));
+
+						$("#positionSize2").val($f.toFixed(11000 / ($f.toFloat("#atr2") * $f.toFloat("#initialRiskRate2") / 0.0001 * 10), 1));
+						$("#initialRisk2").val($f.toFixed($f.floor($f.toFloat("#atr2") * $f.toFloat("#initialRiskRate2"), 100000), 5));
+						$("#volatilityBreakoutBid2").val($f.toFixed($f.toFloat("#close2") - $f.floor($f.toFloat("#atr2") * 0.8, 100000), 5));
+						$("#volatilityBreakoutAsk2").val($f.toFixed($f.toFloat("#close2") + $f.toFloat("#spread2") + $f.floor($f.toFloat("#atr2") * 0.8, 100000), 5));
+						$("#trail2").val($f.toFixed($f.toFloat("#atr2") * $f.toFloat("#initialRiskRate2"), 5));
 					} else if (data[i]["CURRENCY_PAIR"] == "EURUSD") {
-						
+						$("#currencyPair3").val(data[i]["CURRENCY_PAIR"]);
+						$("#spread3").val($f.toFixed(data[i]["SPREAD"], 5));
+						$("#initialRiskRate3").val($f.toFixed(data[i]["IRR_PER_ATR"], 1));
+						$("#atr3").val($f.toFixed(data[i]["ATR"], 5));
+						$("#close3").val($f.toFixed(data[i]["CP_ON_PBD"], 5));
+
+						$("#positionSize3").val($f.toFixed(11000 / ($f.toFloat("#atr3") * $f.toFloat("#initialRiskRate3") / 0.0001 * 10), 1));
+						$("#initialRisk3").val($f.toFixed($f.floor($f.toFloat("#atr3") * $f.toFloat("#initialRiskRate3"), 100000), 5));
+						$("#volatilityBreakoutBid3").val($f.toFixed($f.toFloat("#close3") - $f.floor($f.toFloat("#atr3") * 0.8, 100000), 5));
+						$("#volatilityBreakoutAsk3").val($f.toFixed($f.toFloat("#close3") + $f.toFloat("#spread3") + $f.floor($f.toFloat("#atr3") * 0.8, 100000), 5));
+						$("#trail3").val($f.toFixed($f.toFloat("#atr3") * $f.toFloat("#initialRiskRate3"), 5));
 					} else if (data[i]["CURRENCY_PAIR"] == "GBPUSD") {
-						
+						$("#currencyPair4").val(data[i]["CURRENCY_PAIR"]);
+						$("#spread4").val($f.toFixed(data[i]["SPREAD"], 5));
+						$("#initialRiskRate4").val($f.toFixed(data[i]["IRR_PER_ATR"], 1));
+						$("#atr4").val($f.toFixed(data[i]["ATR"], 5));
+						$("#close4").val($f.toFixed(data[i]["CP_ON_PBD"], 5));
+
+						$("#positionSize4").val($f.toFixed(11000 / ($f.toFloat("#atr4") * $f.toFloat("#initialRiskRate4") / 0.0001 * 10), 1));
+						$("#initialRisk4").val($f.toFixed($f.floor($f.toFloat("#atr4") * $f.toFloat("#initialRiskRate4"), 100000), 5));
+						$("#volatilityBreakoutBid4").val($f.toFixed($f.toFloat("#close4") - $f.floor($f.toFloat("#atr4") * 0.8, 100000), 5));
+						$("#volatilityBreakoutAsk4").val($f.toFixed($f.toFloat("#close4") + $f.toFloat("#spread4") + $f.floor($f.toFloat("#atr4") * 0.8, 100000), 5));
+						$("#trail4").val($f.toFixed($f.toFloat("#atr4") * $f.toFloat("#initialRiskRate4"), 5));
 					} else if (data[i]["CURRENCY_PAIR"] == "AUDUSD") {
-						
+						$("#currencyPair5").val(data[i]["CURRENCY_PAIR"]);
+						$("#spread5").val($f.toFixed(data[i]["SPREAD"], 5));
+						$("#initialRiskRate5").val($f.toFixed(data[i]["IRR_PER_ATR"], 1));
+						$("#atr5").val($f.toFixed(data[i]["ATR"], 5));
+						$("#close5").val($f.toFixed(data[i]["CP_ON_PBD"], 5));
+
+						$("#positionSize5").val($f.toFixed(11000 / ($f.toFloat("#atr5") * $f.toFloat("#initialRiskRate5") / 0.0001 * 10), 1));
+						$("#initialRisk5").val($f.toFixed($f.floor($f.toFloat("#atr5") * $f.toFloat("#initialRiskRate5"), 100000), 5));
+						$("#volatilityBreakoutBid5").val($f.toFixed($f.toFloat("#close5") - $f.floor($f.toFloat("#atr5") * 0.8, 100000), 5));
+						$("#volatilityBreakoutAsk5").val($f.toFixed($f.toFloat("#close5") + $f.toFloat("#spread5") + $f.floor($f.toFloat("#atr5") * 0.8, 100000), 5));
+						$("#trail5").val($f.toFixed($f.toFloat("#atr5") * $f.toFloat("#initialRiskRate5"), 5));
 					} else if (data[i]["CURRENCY_PAIR"] == "NZDUSD") {
-						
+						$("#currencyPair6").val(data[i]["CURRENCY_PAIR"]);
+						$("#spread6").val($f.toFixed(data[i]["SPREAD"], 5));
+						$("#initialRiskRate6").val($f.toFixed(data[i]["IRR_PER_ATR"], 1));
+						$("#atr6").val($f.toFixed(data[i]["ATR"], 5));
+						$("#close6").val($f.toFixed(data[i]["CP_ON_PBD"], 5));
+
+						$("#positionSize6").val($f.toFixed(11000 / ($f.toFloat("#atr6") * $f.toFloat("#initialRiskRate6") / 0.0001 * 10), 1));
+						$("#initialRisk6").val($f.toFixed($f.floor($f.toFloat("#atr6") * $f.toFloat("#initialRiskRate6"), 100000), 5));
+						$("#volatilityBreakoutBid6").val($f.toFixed($f.toFloat("#close6") - $f.floor($f.toFloat("#atr6") * 0.8, 100000), 5));
+						$("#volatilityBreakoutAsk6").val($f.toFixed($f.toFloat("#close6") + $f.toFloat("#spread6") + $f.floor($f.toFloat("#atr6") * 0.8, 100000), 5));
+						$("#trail6").val($f.toFixed($f.toFloat("#atr6") * $f.toFloat("#initialRiskRate6"), 5));
 					} else {
 						// do-nothing.
 					}
@@ -82,197 +193,320 @@
 			</div>
 			<div role="main" class="ui-content">
 				<div class="ui-field-contain">
-					<div id="tabs" data-role="tabs">
-						<div data-role="navbar">
-							<ul>
-								<li><a href="#USDJPY">USD/JPY</a></li>
-								<li><a href="#USDCHF">USD/CHF</a></li>
-								<li><a href="#EURUSD">EUR/USD</a></li>
-								<li><a href="#GBPUSD">GBP/USD</a></li>
-								<li><a href="#AUDUSD">AUD/USD</a></li>
-								<li><a href="#NZDUSD">NZD/USD</a></li>
-							</ul>
-						</div>
-						<div id="USDJPY" class="ui-body">
-							<div class="ui-field-contain">
-								USD/JPY
-							</div>
-							<div class="ui-field-contain">
-								<label for="spreadUsdJpy">スプレッド</label>
-								<input type="number" id="spreadUsdJpy" name="spreadUsdJpy" value="0" data-clear-btn="true" style="text-align: right;">
-							</div>
-							<div class="ui-field-contain">
-								<label for="">ATR</label>
-								<input type="number" id="atrUsdJpy" name="atrUsdJpy" value="0" data-clear-btn="true" style="text-align: right;">
-							</div>
-							<div class="ui-field-contain">
-								<div class="ui-grid-solo">
-									<div class="ui-block-a">
-										<label for="initialRiskUsdJpy">初期リスク(1R)</label>
-										<input type="text" id="initialRiskUsdJpy" name="initialRiskUsdJpy"  value="0" readonly="readonly" style="text-align: right;">
-									</div>
-									<div class="ui-block-a">
-										<label for="irrPerAtrUsdJpy">初期リスク係数</label>
-										<select id="irrPerAtrUsdJpy" name="irrPerAtrUsdJpy">
-											<option value="2.7">2.7</option>
-											<option value="2.8">2.8</option>
-											<option value="2.9">2.9</option>
-											<option value="3.0">3.0</option>
-											<option value="3.1">3.1</option>
-											<option value="3.2">3.2</option>
-											<option value="3.3">3.3</option>
-											<option value="3.4">3.4</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="ui-field-contain">
-								<div class="ui-grid-solo">
-									<div class="ui-block-a">
-										<label>ボラティリティブレイクアウト</label>
-									</div>
-								</div>
-								<div class="ui-grid-a">
-									<div class="ui-block-a">
-										<label for="">BID</label>
-										<input type="text" id="volatilityBreakoutBidUsdJpy" name="volatilityBreakoutBidUsdJpy" value="0" readonly="readonly" style="text-align: right;">
-									</div>
-									<div class="ui-block-b">
-										<label for="">ASK</label>
-										<input type="text" id="volatilityBreakoutAskUsdJpy" name="volatilityBreakoutAskUsdJpy" value="0" readonly="readonly" style="text-align: right;">
-									</div>
-								</div>
-								<div class="ui-grid-solo">
-									<div class="ui-block-a">
-										<label for="cpOnPbdUsdJpy">前営業日の終値</label>
-										<input type="number" id="cpOnPbdUsdJpy" name="cpOnPbdUsdJpy" value="0" data-clear-btn="true" style="text-align: right;">
-									</div>
-								</div>
-							</div>
-							<div class="ui-field-contain">
-								<button id="saveUsdJpyButton" name="saveUsdJpyButton">保存する</button>
-							</div>
-						</div>
-						<div id="USDCHF" class="ui-body">
-							<p>USDCHF</p>
-						</div>
-						<div id="EURUSD" class="ui-body">
-							<p>EURUSD</p>
-						</div>
-						<div id="GBPUSD" class="ui-body">
-							<p>GBPUSD</p>
-						</div>
-						<div id="AUDUSD" class="ui-body">
-							<p>AUDUSD</p>
-						</div>
-						<div id="NZDUSD" class="ui-body">
-							<p>NZDUSD</p>
+					<div class="ui-grid-a">
+						<div class="ui-block-solo">
+							<label for="currencyPair1">通貨ペア</label>
+							<input id="currencyPair1" type="text" readonly="readonly">
 						</div>
 					</div>
-					<div class="ui-field-contain">
-						<div class="ui-grid-a">
-							<div class="ui-block-solo">
-								<label for="s">通貨ペア</label>
-								<input id="s" type="text" value="USD/JPY">
-							</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="spread1">SPREAD</label>
+							<input id="spread1" type="text" data-clear-btn="true" style="text-align: right;">
 						</div>
-						<div class="ui-grid-b">
-							<div class="ui-block-a">
-								<label for="s">SPREAD</label>
-								<input id="s" type="text" value="0.00003" data-clear-btn="true" style="text-align: right;">
-							</div>
-							<div class="ui-block-b">
-								<label for="atr">PS</label>
-								<input id="atr" type="text" value="">
-							</div>
-							<div class="ui-block-c">
-								<label for="atr">1R</label>
-								<input id="atr" type="text" value="">
-							</div>
-							<div class="ui-block-a">
-								<label for="close">VBO(BID)</label>
-								<input id="close" type="text" value="">
-							</div>
-							<div class="ui-block-b">
-								<label for="close">VBO(ASK)</label>
-								<input id="close" type="text" value="">
-							</div>
-							<div class="ui-block-c">
-								<label for="close">TRAIL</label>
-								<input id="close" type="text" value="">
-							</div>
+						<div class="ui-block-b">
+							<label for="positionSize1">PS</label>
+							<input id="positionSize1" type="text" readonly="readonly" style="text-align: right;">
 						</div>
-						<div class="ui-grid-b">
-							<div class="ui-block-a">
-								<label for="s">IR</label>
-								<input id="s" type="text" value="3.00000" data-clear-btn="true" style="text-align: right;">
-							</div>
-							<div class="ui-block-b">
-								<label for="atr">ATR</label>
-								<input id="atr" type="text" value="1.00000" data-clear-btn="true" style="text-align: right;">
-							</div>
-							<div class="ui-block-c">
-								<label for="close">CLOSE</label>
-								<input id="close" type="text" value="1.20000" data-clear-btn="true" style="text-align: right;">
-							</div>
+						<div class="ui-block-c">
+							<label for="initialRisk1">1R</label>
+							<input id="initialRisk1" type="text" readonly="readonly" style="text-align: right;">
 						</div>
-						<div class="ui-grid-solo">
-							<div class="ui-block-a">
-								<button>保存する</button>
-							</div>
+						<div class="ui-block-a">
+							<label for="volatilityBreakoutBid1">VBO(BID)</label>
+							<input id="volatilityBreakoutBid1" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="volatilityBreakoutAsk1">VBO(ASK)</label>
+							<input id="volatilityBreakoutAsk1" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="trail1">TRAIL</label>
+							<input id="trail1" type="text" readonly="readonly" style="text-align: right;">
 						</div>
 					</div>
-					<div class="ui-field-contain">
-						<div class="ui-grid-a">
-							<div class="ui-block-solo">
-								<label for="s">通貨ペア</label>
-								<input id="s" type="text" value="USD/CHF">
-							</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="initialRiskRate1">IRR</label>
+							<input id="initialRiskRate1" type="text" data-clear-btn="true" style="text-align: right;">
 						</div>
-						<div class="ui-grid-b">
-							<div class="ui-block-a">
-								<label for="s">SPREAD</label>
-								<input id="s" type="text" value="0.00003" data-clear-btn="true" style="text-align: right;">
-							</div>
-							<div class="ui-block-b">
-								<label for="atr">PS</label>
-								<input id="atr" type="text" value="">
-							</div>
-							<div class="ui-block-c">
-								<label for="atr">1R</label>
-								<input id="atr" type="text" value="">
-							</div>
-							<div class="ui-block-a">
-								<label for="close">VBO(BID)</label>
-								<input id="close" type="text" value="">
-							</div>
-							<div class="ui-block-b">
-								<label for="close">VBO(ASK)</label>
-								<input id="close" type="text" value="">
-							</div>
-							<div class="ui-block-c">
-								<label for="close">TRAIL</label>
-								<input id="close" type="text" value="">
-							</div>
+						<div class="ui-block-b">
+							<label for="atr1">ATR</label>
+							<input id="atr1" type="text" data-clear-btn="true" style="text-align: right;">
 						</div>
-						<div class="ui-grid-b">
-							<div class="ui-block-a">
-								<label for="s">IR</label>
-								<input id="s" type="text" value="3.00000" data-clear-btn="true" style="text-align: right;">
-							</div>
-							<div class="ui-block-b">
-								<label for="atr">ATR</label>
-								<input id="atr" type="text" value="1.00000" data-clear-btn="true" style="text-align: right;">
-							</div>
-							<div class="ui-block-c">
-								<label for="close">CLOSE</label>
-								<input id="close" type="text" value="1.20000" data-clear-btn="true" style="text-align: right;">
-							</div>
+						<div class="ui-block-c">
+							<label for="close1">CLOSE</label>
+							<input id="close1" type="text" data-clear-btn="true" style="text-align: right;">
 						</div>
-						<div class="ui-grid-solo">
-							<div class="ui-block-a">
-								<button>保存する</button>
-							</div>
+					</div>
+					<div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<button id="saveButton1">保存する</button>
+						</div>
+					</div>
+				</div>
+				<div class="ui-field-contain">
+					<div class="ui-grid-a">
+						<div class="ui-block-solo">
+							<label for="currencyPair2">通貨ペア</label>
+							<input id="currencyPair2" type="text" readonly="readonly">
+						</div>
+					</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="spread2">SPREAD</label>
+							<input id="spread2" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="positionSize2">PS</label>
+							<input id="positionSize2" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="initialRisk2">1R</label>
+							<input id="initialRisk2" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-a">
+							<label for="volatilityBreakoutBid2">VBO(BID)</label>
+							<input id="volatilityBreakoutBid2" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="volatilityBreakoutAsk2">VBO(ASK)</label>
+							<input id="volatilityBreakoutAsk2" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="trail2">TRAIL</label>
+							<input id="trail2" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+					</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="initialRiskRate2">IRR</label>
+							<input id="initialRiskRate2" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="atr2">ATR</label>
+							<input id="atr2" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="close2">CLOSE</label>
+							<input id="close2" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+					</div>
+					<div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<button id="saveButton2">保存する</button>
+						</div>
+					</div>
+				</div>
+				<div class="ui-field-contain">
+					<div class="ui-grid-a">
+						<div class="ui-block-solo">
+							<label for="currencyPair3">通貨ペア</label>
+							<input id="currencyPair3" type="text" readonly="readonly">
+						</div>
+					</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="spread3">SPREAD</label>
+							<input id="spread3" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="positionSize3">PS</label>
+							<input id="positionSize3" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="initialRisk3">1R</label>
+							<input id="initialRisk3" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-a">
+							<label for="volatilityBreakoutBid3">VBO(BID)</label>
+							<input id="volatilityBreakoutBid3" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="volatilityBreakoutAsk3">VBO(ASK)</label>
+							<input id="volatilityBreakoutAsk3" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="trail3">TRAIL</label>
+							<input id="trail3" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+					</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="initialRiskRate3">IRR</label>
+							<input id="initialRiskRate3" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="atr3">ATR</label>
+							<input id="atr3" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="close3">CLOSE</label>
+							<input id="close3" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+					</div>
+					<div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<button id="saveButton3">保存する</button>
+						</div>
+					</div>
+				</div>
+				<div class="ui-field-contain">
+					<div class="ui-grid-a">
+						<div class="ui-block-solo">
+							<label for="currencyPair4">通貨ペア</label>
+							<input id="currencyPair4" type="text" readonly="readonly">
+						</div>
+					</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="spread4">SPREAD</label>
+							<input id="spread4" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="positionSize4">PS</label>
+							<input id="positionSize4" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="initialRisk4">1R</label>
+							<input id="initialRisk4" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-a">
+							<label for="volatilityBreakoutBid4">VBO(BID)</label>
+							<input id="volatilityBreakoutBid4" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="volatilityBreakoutAsk4">VBO(ASK)</label>
+							<input id="volatilityBreakoutAsk4" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="trail4">TRAIL</label>
+							<input id="trail4" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+					</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="initialRiskRate4">IRR</label>
+							<input id="initialRiskRate4" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="atr4">ATR</label>
+							<input id="atr4" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="close4">CLOSE</label>
+							<input id="close4" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+					</div>
+					<div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<button id="saveButton4">保存する</button>
+						</div>
+					</div>
+				</div>
+				<div class="ui-field-contain">
+					<div class="ui-grid-a">
+						<div class="ui-block-solo">
+							<label for="currencyPair5">通貨ペア</label>
+							<input id="currencyPair5" type="text" readonly="readonly">
+						</div>
+					</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="spread5">SPREAD</label>
+							<input id="spread5" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="positionSize5">PS</label>
+							<input id="positionSize5" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="initialRisk5">1R</label>
+							<input id="initialRisk5" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-a">
+							<label for="volatilityBreakoutBid5">VBO(BID)</label>
+							<input id="volatilityBreakoutBid5" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="volatilityBreakoutAsk5">VBO(ASK)</label>
+							<input id="volatilityBreakoutAsk5" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="trail5">TRAIL</label>
+							<input id="trail5" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+					</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="initialRiskRate5">IRR</label>
+							<input id="initialRiskRate5" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="atr5">ATR</label>
+							<input id="atr5" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="close5">CLOSE</label>
+							<input id="close5" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+					</div>
+					<div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<button id="saveButton5">保存する</button>
+						</div>
+					</div>
+				</div>
+				<div class="ui-field-contain">
+					<div class="ui-grid-a">
+						<div class="ui-block-solo">
+							<label for="currencyPair6">通貨ペア</label>
+							<input id="currencyPair6" type="text" readonly="readonly">
+						</div>
+					</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="spread6">SPREAD</label>
+							<input id="spread6" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="positionSize6">PS</label>
+							<input id="positionSize6" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="initialRisk6">1R</label>
+							<input id="initialRisk6" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-a">
+							<label for="volatilityBreakoutBid6">VBO(BID)</label>
+							<input id="volatilityBreakoutBid6" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="volatilityBreakoutAsk6">VBO(ASK)</label>
+							<input id="volatilityBreakoutAsk6" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="trail6">TRAIL</label>
+							<input id="trail6" type="text" readonly="readonly" style="text-align: right;">
+						</div>
+					</div>
+					<div class="ui-grid-b">
+						<div class="ui-block-a">
+							<label for="initialRiskRate6">IRR</label>
+							<input id="initialRiskRate6" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-b">
+							<label for="atr6">ATR</label>
+							<input id="atr6" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+						<div class="ui-block-c">
+							<label for="close6">CLOSE</label>
+							<input id="close6" type="text" data-clear-btn="true" style="text-align: right;">
+						</div>
+					</div>
+					<div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<button id="saveButton6">保存する</button>
 						</div>
 					</div>
 				</div>
